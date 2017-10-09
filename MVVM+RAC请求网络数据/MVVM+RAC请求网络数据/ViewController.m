@@ -19,6 +19,7 @@
 
 @implementation ViewController
 
+/** 懒加载VM */
 - (RequestViewModel *)requesetViewModel
 {
     if (_requesetViewModel == nil) {
@@ -29,12 +30,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    // 创建tableView
     UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
     tableView.dataSource = self.requesetViewModel;
     self.requesetViewModel.tableView = tableView;
     [self.view addSubview:tableView];
-    
+    // 执行请求
     [self.requesetViewModel.requestCommand execute:nil];
 }
 

@@ -11,7 +11,7 @@
 #import "Book.h"
 
 @implementation RequestViewModel
-
+/** 初始化时绑定 */
 - (instancetype)init
 {
     self = [super init];
@@ -21,6 +21,7 @@
     return self;
 }
 
+/** 绑定 */
 - (void)initialBind
 {
     _requestCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
@@ -32,7 +33,8 @@
             parameters[@"q"] = @"基础";
             // 网络请求
             [[AFHTTPSessionManager manager] GET:@"https://api.douban.com/v2/book/search" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                
+                // 请求成功调用
+                // 把数据用信号传递出去
                 [subscriber sendNext:responseObject];
                 [subscriber sendCompleted];
                 
@@ -43,10 +45,10 @@
             }];
             return nil;
         }];
-        
+        // 在返回数据信号时，把数据中的字典映射成模型信号，传递出去
         return [requestSignal map:^id _Nullable(id  _Nullable value) {
             NSMutableArray *dictArr = value[@"books"];
-            
+            // 字典转模型，遍历字典中的所有元素，全部映射成模型，并且生成数组
             NSArray *modelArr = [[dictArr.rac_sequence map:^id _Nullable(id  _Nullable value) {
                 
                 return [Book bookWithDict:value];
@@ -59,6 +61,7 @@
     
     // 获取请求的数据
     [_requestCommand.executionSignals.switchToLatest subscribeNext:^(id  _Nullable x) {
+        // 有了新数据，赋值并刷新表格
         _models = x;
         [self.tableView reloadData];
     }];

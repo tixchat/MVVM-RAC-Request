@@ -14,8 +14,7 @@
 @property(nonatomic, strong) RACCommand *requestCommand;
 /** 模型数组 */
 @property(nonatomic, copy) NSArray *models;
-/** 控制器中的view */
+/** 控制器中的UITableView */
 @property(nonatomic, weak) UITableView *tableView;
-
 
 @end

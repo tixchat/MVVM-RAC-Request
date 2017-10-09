@@ -10,6 +10,12 @@
 
 @implementation Book
 
+/**
+ 字典转模型
+
+ @param dict 字典
+ @return 模型
+ */
 + (instancetype)bookWithDict:(NSDictionary *)dict
 {
     Book *book = [[self alloc] init];

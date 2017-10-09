@@ -13,7 +13,7 @@
 @property(nonatomic, copy) NSString *title;
 /** 价格 */
 @property(nonatomic, copy) NSString *price;
-
+/** 字典转模型 */
 + (instancetype)bookWithDict:(NSDictionary *)dict;
 
 @end
